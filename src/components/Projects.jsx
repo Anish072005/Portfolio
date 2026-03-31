@@ -60,77 +60,75 @@ export default function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: idx * 0.1 }}
-            className="group relative flex flex-col justify-between rounded-2xl border border-emerald-200 dark:border-emerald-800/50 overflow-hidden hover:shadow-xl transition-all duration-300"
-style={{ minHeight: "300px", minWidth: "10", width: "100%" }}
+            className="group relative flex flex-col rounded-2xl border border-slate-200 dark:border-emerald-500/20 bg-white/60 dark:bg-slate-950/60 backdrop-blur-md overflow-hidden hover:border-emerald-500/40 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all duration-500"
+            style={{ width: "100%" }}
           >
-            {/* Background image */}
-            {project.image ? (
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${project.image})` }}
-              />
-            ) : (
-              <div className="absolute inset-0 bg-emerald-50 dark:bg-emerald-950/30" />
-            )}
-
-            {/* Overlay */}
-<div className="absolute inset-0 bg-white/85 dark:bg-slate-900/85 group-hover:bg-white/75 dark:group-hover:bg-slate-900/75 transition-all duration-300" />
-
-            {/* Content */}
-            <div className="relative z-10 flex flex-col justify-between h-full p-6">
-              {/* Top */}
-              <div>
-                <div className="flex items-start justify-between mb-3">
-                  <div className="space-y-2">
-<h3 className="text-xl font-sans font-semibold text-gray-900 dark:text-white tracking-tight">
-                      {project.title}
-                    </h3>
-                    <div className="flex items-center gap-1.5">
-                      <span className={`w-2 h-2 rounded-full ${statusColor[project.status]}`} />
-                      <span className="text-xs font-mono text-muted">{project.status}</span>
-                    </div>
-                  </div>
-
-                  {/* Icons */}
-                  <div className="flex items-center gap-2">
-                    
-                    <a href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-9 h-9 flex items-center justify-center rounded-full border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-emerald-950/50 text-muted hover:text-foreground transition-colors"
-                    >
-                      <Github className="w-4 h-4" />
-                    </a>
-                    {project.link !== "#" && (
-                      
-                     <a href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-9 h-9 flex items-center justify-center rounded-full border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-emerald-950/50 text-muted hover:text-foreground transition-colors"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                    )}
-                  </div>
+            {/* Image Container */}
+            <div className="relative h-56 md:h-64 overflow-hidden">
+              {project.image ? (
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                />
+              ) : (
+                <div className="w-full h-full bg-emerald-950/30 flex items-center justify-center">
+                  <span className="text-emerald-500/30 font-serif italic">Preview Coming Soon</span>
                 </div>
-<p className="text-sm text-gray-700 dark:text-slate-300 leading-relaxed mt-4">
+              )}
+              {/* Refined Image Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-slate-950 via-slate-50/20 dark:via-slate-950/20 to-transparent opacity-80" />
+              
+              {/* Status Badge */}
+              <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border border-slate-200 dark:border-emerald-500/20 shadow-2xl">
+                <span className={`w-2 h-2 rounded-full ${statusColor[project.status]} animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]`} />
+                <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold tracking-[0.1em] uppercase">{project.status}</span>
+              </div>
+            </div>
+
+            {/* Premium Content Area */}
+            <div className="flex flex-col flex-1 p-8 space-y-6 bg-slate-50/40 dark:bg-slate-950/40">
+              <div className="flex-1 space-y-4">
+                <h3 className="text-3xl font-serif font-bold text-slate-900 dark:text-white tracking-tight group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors duration-300">
+                  {project.title}
+                </h3>
+                <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-sans line-clamp-3 group-hover:text-slate-900 dark:group-hover:text-slate-300 transition-colors">
                   {project.description}
                 </p>
               </div>
 
-              {/* Bottom tags */}
-              <div>
-                <div className="border-t border-emerald-200 dark:border-emerald-800/50 my-4" />
-                <div className="flex flex-wrap gap-3">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs font-mono text-muted flex items-center gap-1"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 dark:bg-emerald-600 inline-block" />
-                      {tag}
-                    </span>
-                  ))}
+              {/* Enhanced Tags */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-[10px] font-mono px-3 py-1 rounded-full bg-emerald-500/5 text-emerald-400 border border-emerald-500/10 hover:bg-emerald-500/10 hover:border-emerald-500/20 transition-all duration-300"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              {/* Action Links with Hover Effects */}
+              <div className="flex items-center justify-between pt-6 mt-auto border-t border-emerald-500/10">
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-serif italic font-medium text-lg hover:text-emerald-500 dark:hover:text-emerald-300 transition-all group/link"
+                >
+                  <ExternalLink className="w-6 h-6 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform duration-300" />
+                </a>
+                
+                <div className="flex items-center gap-3">
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-full text-slate-500 hover:text-emerald-400 hover:bg-slate-900 border border-transparent hover:border-emerald-500/20 transition-all duration-300"
+                  >
+                    <Github className="w-6 h-6" />
+                  </a>
                 </div>
               </div>
             </div>
